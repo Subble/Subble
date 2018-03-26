@@ -1,0 +1,3 @@
+[submodule "Plugins/ConfigManager"]
+	path = Plugins/ConfigManager
+	url = https://github.com/Subble/ConfigManager.git

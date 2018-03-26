@@ -7,7 +7,7 @@ Subble is an never-ending program to help me manage, play and share my music bet
 
 ## **Build**
 
-`git clone --recurse-submodules [URL]`
+`git clone --recurse-submodules https://github.com/Subble/Subble.git`
 
 - windows: `build.ps1`
 - linux: `build.sh`
