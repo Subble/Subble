@@ -55,7 +55,8 @@ void PublishPlugin(DirectoryInfo info){
 
 Task("Clean")
 .Does(() => {
-    System.IO.Directory.Delete("Build", true);
+    var dirInfo = new System.IO.DirectoryInfo("Build");
+    if(dirInfo.Exists) dirInfo.Delete(true);
 });
 
 Task("Subble")
