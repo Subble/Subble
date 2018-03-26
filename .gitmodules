@@ -1,3 +1,6 @@
 [submodule "Plugins/ConfigManager"]
 	path = Plugins/ConfigManager
 	url = https://github.com/Subble/ConfigManager.git
+[submodule ".\\Plugins\\BasicLogger"]
+	path = .\\Plugins\\BasicLogger
+	url = https://github.com/Subble/BasicLogger.git
