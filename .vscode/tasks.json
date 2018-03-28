@@ -3,13 +3,19 @@
     "tasks": [
         {
             "label": "build",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/Subble/Subble.csproj"
-            ],
-            "problemMatcher": "$msCompile"
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "start",
+                    "build.ps1"
+                ]
+            },
+            "linux": {
+                "command": "bash",
+                "args": [
+                    "./build.sh"
+                ]
+            }
         }
     ]
 }

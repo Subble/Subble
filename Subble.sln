@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Subble", "Subble\Subble.csproj", "{ABDE05A9-4555-4812-AD11-5DDA9B63EE92}"
 EndProject
@@ -20,7 +20,7 @@ Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "dotnet", "C:\Program Files\
 		PortSupplier = 00000000-0000-0000-0000-000000000000
 		Executable = C:\Program Files\dotnet\dotnet.exe
 		RemoteMachine = DESKTOP-JE2GERS
-		StartingDirectory = D:\Projects\Subble\Build
+		StartingDirectory = C:\Projects\Subble\Build
 		Arguments = Subble.dll
 		Environment = Default
 		LaunchingEngine = 00000000-0000-0000-0000-000000000000

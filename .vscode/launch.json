@@ -8,13 +8,13 @@
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "Cake: Run Default",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Subble/bin/Debug/netcoreapp2.0/Subble.dll",
+            "program": "${workspaceFolder}/Build/Subble.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Subble",
+            "cwd": "${workspaceFolder}/Build",
             // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
-            "console": "internalConsole",
+            "console": "externalTerminal",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart"
         },
