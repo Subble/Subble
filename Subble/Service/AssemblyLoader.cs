@@ -8,11 +8,15 @@ using Subble.Core.Plugin;
 
 using static Subble.Core.Func.Option;
 using Subble.Core.Func;
+using System.Text.RegularExpressions;
 
 namespace Subble.Service
 {
     internal class AssemblyLoader
     {
+        private const string regexName =
+            @"Plugin\.[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\.dll";
+
         public DirectoryInfo Directory { get; }
         public List<FileInfo> DependenciesDll { get; private set; }
         public FileInfo PluginDll { get; private set; }
@@ -64,8 +68,9 @@ namespace Subble.Service
         /// <returns></returns>
         private bool LoadPluginDll(IEnumerable<FileInfo> files)
         {
-            var pluginFile = files.FirstOrDefault(f =>
-                string.Equals(f.Name, "plugin.dll", StringComparison.OrdinalIgnoreCase));
+            var rx = new Regex(regexName, RegexOptions.IgnoreCase);
+
+            var pluginFile = files.FirstOrDefault(f => rx.IsMatch(f.Name));
 
             if (pluginFile is null)
                 return false;

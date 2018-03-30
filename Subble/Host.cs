@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Subble
     {
         public Host()
         {
+            EventSource = new List<IObserver<ISubbleEvent>>();
             Events = InitEvents();
             ServiceContainer = new ServiceContainer(this);
         }
@@ -24,7 +26,7 @@ namespace Subble
         public SemVersion Version
             => new SemVersion(0, 0, 1);
 
-        private IObserver<ISubbleEvent> EventSource { get; set; }
+        private List<IObserver<ISubbleEvent>> EventSource { get; }
         public IObservable<ISubbleEvent> Events { get; }
 
         public IServiceContainer ServiceContainer { get; }
@@ -32,8 +34,9 @@ namespace Subble
         private IObservable<ISubbleEvent> InitEvents()
         {
             return Observable.Create(
-                (IObserver<ISubbleEvent> source) => {
-                    EventSource = source;
+                (IObserver<ISubbleEvent> source) =>
+                {
+                    EventSource.Add(source);
                     return Disposable.Empty;
                 });
         }
@@ -46,7 +49,10 @@ namespace Subble
         public SubbleEmitResponse EmitEvent<T>(string type, string source, T payload)
         {
             var e = new SubbleEvent<T>(type, source, payload);
-            Task.Run(() => EventSource.OnNext(e));
+            
+            foreach(var client  in EventSource)
+                Task.Run(() => client.OnNext(e));
+
             return new SubbleEmitResponse(false, "Emit", e.Id);
         }
 
