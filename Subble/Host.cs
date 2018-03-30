@@ -50,17 +50,12 @@ namespace Subble
             return new SubbleEmitResponse(false, "Emit", e.Id);
         }
 
-        public void Start()
+
+        public void Start(string path)
         {
-            LoadInternalPlugins();
+            PluginLoader.LoadPlugins(new string[1] { path }, this);
             EmitEvent(INIT, "HOST");
             EmitEvent(LOG, "HOST", GetInfoLog("Subble initialized"));
-        }
-
-        //Load plugins built internly
-        private void LoadInternalPlugins()
-        {
-            ConfigManager.RegisterService(this);
         }
     }
 }

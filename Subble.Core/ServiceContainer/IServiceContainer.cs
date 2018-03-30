@@ -56,6 +56,13 @@ namespace Subble.Core.ServiceContainer
         int MatchService<T>(SemVersion version);
 
         /// <summary>
+        /// Checks if required dependency is present
+        /// </summary>
+        /// <param name="dependency"></param>
+        /// <returns>0 if not present, -1 if versions are incompatible and 1 if OK</returns>
+        int ValidateDependency(Dependency dependency);
+
+        /// <summary>
         /// Service container events
         /// </summary>
         IObservable<SubbleEvent<SCPayload>> Events { get; }

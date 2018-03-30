@@ -101,5 +101,14 @@ namespace Subble.Service
             var current = _container[typeof(T)];
             return current.Version.IsCompatible(version) ? 1 : -1;
         }
+
+        public int ValidateDependency(Dependency dependency)
+        {
+            var hasService = _container.ContainsKey(dependency.DependencyType);
+            if (!hasService) return 0;
+
+            return _container[dependency.DependencyType]
+                    .Version.IsCompatible(dependency.Version) ? 1 : -1;
+        }
     }
 }

@@ -12,11 +12,11 @@ namespace Subble
     {
         static void Main(string[] args)
         {
-            CreatePluginsFolder();
+            var path = CreatePluginsFolder();
 
             var host = new Host();
             SubscribeLogs(host);
-            host.Start();
+            host.Start(path);
 
             Console.ReadKey();
         }
@@ -26,10 +26,11 @@ namespace Subble
             return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         }
 
-        private static void CreatePluginsFolder()
+        private static string CreatePluginsFolder()
         {
             var path = GetRunningDirectory() + "/Plugins";
             Directory.CreateDirectory(path);
+            return path;
         }
 
         private static void SubscribeLogs(ISubbleHost host)

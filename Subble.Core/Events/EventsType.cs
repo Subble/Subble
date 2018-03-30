@@ -31,6 +31,11 @@
             /// For logging purposes
             /// </summary>
             public const string LOG = PRE + "LOG";
+
+            /// <summary>
+            /// New plugin initialised
+            /// </summary>
+            public const string NEW_PLUGIN = PRE + "NEW_PLUGIN_LOADED";
         }
 
         /// <summary>
