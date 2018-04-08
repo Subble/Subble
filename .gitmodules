@@ -4,6 +4,6 @@
 [submodule "Plugins/BasicLogger"]
 	path = Plugins/BasicLogger
 	url = https://github.com/Subble/BasicLogger.git
-[submodule ".\\Plugins\\SocketCommunication"]
-	path = .\\Plugins\\SocketCommunication
+[submodule "Plugins/SocketCommunication"]
+	path = Plugins/SocketCommunication
 	url = https://github.com/Subble/SocketCommunication.git
