@@ -13,6 +13,15 @@ namespace Subble.Core.Func
 
         internal Option(object value)
             => _value = value;
+            
+        /// <summary>
+        /// Check is has value not null
+        /// </summary>
+        /// <returns>False if null</returns>
+        public bool HasValue()
+        {
+            return !(_value is null);
+        }
 
         /// <summary>
         /// Match value to Type

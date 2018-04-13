@@ -11,9 +11,10 @@ namespace Subble.Core.Plugin
             Minor = minor;
             Patch = patch;
         }
+
         public SemVersion(string version)
         {
-            var split = version.Split('.')
+            var split = version?.Split('.')
                 .Where(e => !string.IsNullOrEmpty(e) && UInt32.TryParse(e, out var _))
                 .Select(e => UInt32.Parse(e))
                 .ToArray();
@@ -51,24 +52,6 @@ namespace Subble.Core.Plugin
                     || Minor > other.Minor);
         }
 
-        public static bool operator >(SemVersion p1, SemVersion p2)
-            => p1.CompareTo(p2) > 0;
-
-        public static bool operator <(SemVersion p1, SemVersion p2)
-            => p1.CompareTo(p2) < 0;
-
-        public static bool operator >=(SemVersion p1, SemVersion p2)
-            => p1.CompareTo(p2) >= 0;
-
-        public static bool operator <=(SemVersion p1, SemVersion p2)
-            => p1.CompareTo(p2) <= 0;
-
-        public static bool operator ==(SemVersion p1, SemVersion p2)
-            => p1.CompareTo(p2) == 0;
-
-        public static bool operator !=(SemVersion p1, SemVersion p2)
-            => p1.CompareTo(p2) != 0;
-
         public int CompareTo(SemVersion other)
         {
             if (Equals(other)) return 0;
@@ -105,6 +88,29 @@ namespace Subble.Core.Plugin
         public override string ToString()
         {
             return $"{Major}.{Minor}.{Patch}";
+        }
+
+        public static bool operator >(SemVersion p1, SemVersion p2)
+            => p1.CompareTo(p2) > 0;
+
+        public static bool operator <(SemVersion p1, SemVersion p2)
+            => p1.CompareTo(p2) < 0;
+
+        public static bool operator >=(SemVersion p1, SemVersion p2)
+            => p1.CompareTo(p2) >= 0;
+
+        public static bool operator <=(SemVersion p1, SemVersion p2)
+            => p1.CompareTo(p2) <= 0;
+
+        public static bool operator ==(SemVersion p1, SemVersion p2)
+            => p1.CompareTo(p2) == 0;
+
+        public static bool operator !=(SemVersion p1, SemVersion p2)
+            => p1.CompareTo(p2) != 0;
+
+        public static implicit operator SemVersion((uint major, uint minor, uint patch) tuple)
+        {
+            return new SemVersion(tuple.major, tuple.minor, tuple.patch);
         }
     }
 }
