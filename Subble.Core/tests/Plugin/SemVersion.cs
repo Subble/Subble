@@ -46,11 +46,36 @@ namespace Subble.Core.Test.Plugin
         [InlineData(523543, 98476984, 18442343)]
         public void SemVersion_Cast_Tuple(uint major, uint minor, uint patch)
         {
-            SemVersion v = (major, minor, patch);
+            SemVersion v = (major, minor, patch); 
 
             Assert.Equal(major, v.Major);
             Assert.Equal(minor, v.Minor);
             Assert.Equal(patch, v.Patch);
+        }
+
+        [Fact]
+        public void SemVersion_IsCompatible()
+        {
+            SemVersion v1 = (5, 3, 3);
+            SemVersion v2 = (5, 6, 1);
+            SemVersion v3 = (6, 1, 1);
+            SemVersion v4 = (6, 1, 5);
+
+            Assert.False(v1.IsCompatible(v2));
+            Assert.False(v1.IsCompatible(v3));
+            Assert.False(v1.IsCompatible(v4));
+
+            Assert.True(v2.IsCompatible(v1));
+            Assert.False(v2.IsCompatible(v3));
+            Assert.False(v2.IsCompatible(v4));
+
+            Assert.True(v3.IsCompatible(v1));
+            Assert.True(v3.IsCompatible(v2));
+            Assert.False(v3.IsCompatible(v4));
+
+            Assert.True(v4.IsCompatible(v1));
+            Assert.True(v4.IsCompatible(v2));
+            Assert.True(v4.IsCompatible(v3));
         }
     }
 }
