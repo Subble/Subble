@@ -1,3 +1,4 @@
+#if DEBUG
 using Xunit;
 using Subble.Core.Func;
 
@@ -105,3 +106,4 @@ namespace Subble.Core.Test.Func
         }
     }
 }
+#endif

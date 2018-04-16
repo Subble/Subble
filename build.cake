@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
-var configuration = Argument("configuration", "Release");
+var configuration = Argument("configuration", "Debug");
 
 const string SubblePath = "Subble/Subble.csproj";
 const string PluginsPath = "Plugins";
@@ -18,6 +18,7 @@ Setup(ctx =>
 {
    // Executed BEFORE the first task.
    Information("Running tasks...");
+   Information("Configuration: " + configuration);
 });
 
 Teardown(ctx =>
@@ -50,7 +51,7 @@ void PublishPlugin(DirectoryInfo info){
     Information("Found project in: " + project.FullName);
 
     var projOutput = System.IO.Path.Combine(OutputPlugins, name);
-    DotNetCorePublish(project.FullName, new DotNetCorePublishSettings{OutputDirectory = projOutput});
+    DotNetCorePublish(project.FullName, new DotNetCorePublishSettings{OutputDirectory = projOutput, Configuration = configuration});
 }
 
 Task("Clean")
@@ -62,7 +63,7 @@ Task("Clean")
 Task("Subble")
 .IsDependentOn("Clean")
 .Does(() => {
-    DotNetCorePublish(SubblePath, new DotNetCorePublishSettings{OutputDirectory = "Build"});
+    DotNetCorePublish(SubblePath, new DotNetCorePublishSettings{OutputDirectory = "Build", Configuration = configuration});
 });
 
 Task("Plugins")

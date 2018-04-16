@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Subble", "Subble\Subble.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Subble.Core", "Subble.Core\Subble.Core.csproj", "{15D14C82-211D-4FB3-90B3-AFA698EACF54}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Subble.Test", "Subble.Test\Subble.Test.csproj", "{01E14F79-57FC-4E98-ADA6-9B356EB57AA7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{C3CDFF1E-D26C-4514-A1CB-D89B8819897D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigManager", "Plugins\ConfigManager\ConfigManager.csproj", "{1FD48D51-0CDF-4481-9F9B-83216A06E5B1}"

@@ -1,3 +1,4 @@
+#if DEBUG
 using Xunit;
 using Subble.Core.Plugin;
 
@@ -69,13 +70,149 @@ namespace Subble.Core.Test.Plugin
             Assert.False(v2.IsCompatible(v3));
             Assert.False(v2.IsCompatible(v4));
 
-            Assert.True(v3.IsCompatible(v1));
-            Assert.True(v3.IsCompatible(v2));
+            Assert.False(v3.IsCompatible(v1));
+            Assert.False(v3.IsCompatible(v2));
             Assert.False(v3.IsCompatible(v4));
 
-            Assert.True(v4.IsCompatible(v1));
-            Assert.True(v4.IsCompatible(v2));
+            Assert.False(v4.IsCompatible(v1));
+            Assert.False(v4.IsCompatible(v2));
             Assert.True(v4.IsCompatible(v3));
+        }
+
+        [Fact]
+        public void SemVersion_CompareTo()
+        {
+            SemVersion v0 = (5, 3, 3);
+            SemVersion v1 = (5, 3, 3);
+            SemVersion v2 = (5, 6, 1);
+            SemVersion v3 = (6, 1, 1);
+            SemVersion v4 = (6, 1, 5);
+
+            //Compare Major
+            Assert.Equal(-1, v1.CompareTo(v3));
+            Assert.Equal(1, v3.CompareTo(v1));
+
+            //Compare Minor
+            Assert.Equal(-1, v1.CompareTo(v2));
+            Assert.Equal(1, v2.CompareTo(v1));
+
+            //Compare Patch
+            Assert.Equal(-1, v3.CompareTo(v4));
+            Assert.Equal(1, v4.CompareTo(v3));
+
+            Assert.Equal(0, v1.CompareTo(v0));
+        }
+
+        [Fact]
+        public void SemVersion_Equals()
+        {
+            SemVersion v0 = (1, 2, 3);
+            SemVersion v1 = (1, 2, 3);
+
+            Assert.True(v0.Equals(v1));
+            Assert.True(v0.Equals((object)v1));
+        }
+
+        [Fact]
+        public void SemVersion_ToString()
+        {
+            SemVersion v0 = (1, 2, 3);
+            
+            var expected = "1.2.3";
+            var result = v0.ToString();
+
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void SemVersion_operator_bigger()
+        {
+            SemVersion v0 = (1, 2, 3);
+            SemVersion v1 = (1, 2, 4);
+            SemVersion v2 = (1, 3, 3);
+            SemVersion v3 = (2, 2, 3);
+            SemVersion v4 = (1, 2, 3);
+
+            Assert.True(v1 > v0);
+            Assert.True(v2 > v0);
+            Assert.True(v3 > v0);
+            Assert.False(v4 > v0);
+        }
+
+        [Fact]
+        public void SemVersion_operator_biggerOrEqual()
+        {
+            SemVersion v0 = (1, 2, 3);
+            SemVersion v1 = (1, 2, 4);
+            SemVersion v2 = (1, 3, 3);
+            SemVersion v3 = (2, 2, 3);
+            SemVersion v4 = (1, 2, 3);
+
+            Assert.True(v1 >= v0);
+            Assert.True(v2 >= v0);
+            Assert.True(v3 >= v0);
+            Assert.True(v4 >= v0);
+        }
+
+        [Fact]
+        public void SemVersion_operator_smallOrEqual()
+        {
+            SemVersion v0 = (1, 2, 3);
+            SemVersion v1 = (1, 2, 4);
+            SemVersion v2 = (1, 3, 3);
+            SemVersion v3 = (2, 2, 3);
+            SemVersion v4 = (1, 2, 3);
+
+            Assert.True(v0 <= v1);
+            Assert.True(v0 <= v2);
+            Assert.True(v0 <= v3);
+            Assert.True(v0 <= v4);
+        }
+
+        [Fact]
+        public void SemVersion_operator_small()
+        {
+            SemVersion v0 = (1, 2, 3);
+            SemVersion v1 = (1, 2, 4);
+            SemVersion v2 = (1, 3, 3);
+            SemVersion v3 = (2, 2, 3);
+            SemVersion v4 = (1, 2, 3);
+
+            Assert.True(v0 < v1);
+            Assert.True(v0 < v2);
+            Assert.True(v0 < v3);
+            Assert.False(v0 < v4);
+        }
+
+        [Fact]
+        public void SemVersion_operator_equal()
+        {
+            SemVersion v0 = (1, 2, 3);
+            SemVersion v1 = (1, 2, 4);
+            SemVersion v2 = (1, 3, 3);
+            SemVersion v3 = (2, 2, 3);
+            SemVersion v4 = (1, 2, 3);
+
+            Assert.False(v0 == v1);
+            Assert.False(v0 == v2);
+            Assert.False(v0 == v3);
+            Assert.True(v0 == v4);
+        }
+
+        [Fact]
+        public void SemVersion_operator_notEqual()
+        {
+            SemVersion v0 = (1, 2, 3);
+            SemVersion v1 = (1, 2, 4);
+            SemVersion v2 = (1, 3, 3);
+            SemVersion v3 = (2, 2, 3);
+            SemVersion v4 = (1, 2, 3);
+
+            Assert.True(v0 != v1);
+            Assert.True(v0 != v2);
+            Assert.True(v0 != v3);
+            Assert.False(v0 != v4);
         }
     }
 }
+#endif
