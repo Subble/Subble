@@ -17,7 +17,7 @@ namespace Subble.Core.Plugin
             var split = version?.Split('.')
                 .Where(e => !string.IsNullOrEmpty(e) && UInt32.TryParse(e, out var _))
                 .Select(e => UInt32.Parse(e))
-                .ToArray();
+                .ToArray() ?? new uint[0];
 
             Patch = split.Length >= 3 ? split[2] : 0;
             Minor = split.Length >= 2 ? split[1] : 0;
