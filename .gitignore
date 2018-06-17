@@ -268,3 +268,6 @@ __pycache__/
 # CAKE debug and intellisense tools
 tools/
 Build/
+
+# Documentation generated site
+/site
