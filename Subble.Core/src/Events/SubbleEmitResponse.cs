@@ -2,6 +2,10 @@
 
 namespace Subble.Core.Events
 {
+    /// <summary>
+    /// Details of the emited event,
+    /// handy to debug
+    /// </summary>
     public struct SubbleEmitResponse
     {
         public SubbleEmitResponse(bool isError, string message, Guid id)

@@ -18,6 +18,6 @@ namespace Subble.Core.Socket
         /// <summary>
         /// The message paylod
         /// </summary>
-        Byte[] Payload { get; }
+        byte[] Payload { get; }
     }
 }

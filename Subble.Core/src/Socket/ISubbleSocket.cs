@@ -10,7 +10,7 @@ namespace Subble.Core.Socket
         /// </summary>
         /// <returns>true, if connection is open</returns>
         bool IsAlive { get; }
-
+        
         /// <summary>
         /// Endpoint used to connect socket
         /// </summary>

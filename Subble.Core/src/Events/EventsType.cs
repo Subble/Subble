@@ -1,7 +1,7 @@
 ﻿namespace Subble.Core.Events
 {
     /// <summary>
-    /// Helper for event's type
+    /// Helper for events type
     /// </summary>
     public static class EventsType
     {

@@ -9,8 +9,15 @@ namespace Subble.Core.Func
     /// </summary>
     public struct Option
     {
+        /// <summary>
+        /// value to encapsulate
+        /// </summary>
         private readonly object _value;
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="value">value to encapsulate</param>
         internal Option(object value)
             => _value = value;
             
@@ -33,60 +40,106 @@ namespace Subble.Core.Func
         {
             value = default(T);
 
-            if (_value is T)
+            if (_value is T t)
             {
-                value = (T)_value;
+                value = t;
                 return true;
             }
 
             return false;
         }
 
+        /// <summary>
+        /// Match value to Type
+        /// </summary>
+        /// <typeparam name="T">type to match</typeparam>
+        /// <returns>true if type match</returns>
         public bool HasValue<T>()
             => _value is T;
 
         /// <summary>
-        /// Pattern match simulation
+        /// If type match and has value,
+        /// Some is invoked, else none is invoked
         /// </summary>
         /// <typeparam name="T">Type to match</typeparam>
-        /// <param name="None">Called if value id null</param>
-        /// <param name="Some">Called if value is not null</param>
+        /// <param name="None">Invoked if value is null</param>
+        /// <param name="Some">Invoked if value is not null</param>
         public Option Match<T>(Action None, Action<T> Some)
         {
-            if (_value is T) Some((T)_value);
+            if (_value is T v) Some(v);
             else None();
 
             return this;
         }
 
+        /// <summary>
+        /// If type match, invoke action
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Some">action to invoke</param>
+        /// <returns>returns self to allow chain</returns>
         public Option Some<T>(Action<T> Some)
             => Match(Void, Some);
 
+        /// <summary>
+        /// If type do not match or if null, invoke action
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="None">action to invoke</param>
+        /// <returns>returns self to allow chain</returns>
         public Option None<T>(Action None)
             => Match<T>(None, Void);
 
+        /// <summary>
+        /// Return option with implicit type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public Option<T> ToTyped<T>()
             => new Option<T>(this);
 
+        /// <summary>
+        /// Encapsulate value
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static Option<T> Some<T>(T value)
             => new Option<T>(value);
 
+        /// <summary>
+        /// Empty encapsulation 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static Option<T> None<T>()
             => new Option<T>(None());
 
+        /// <summary>
+        /// Empty encapsulation 
+        /// </summary>
+        /// <returns></returns>
         public static Option None()
             => new Option(null);
 
-        public static Option Some(object instance)
-            => new Option(instance);
+        /// <summary>
+        /// Encapsulate value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Option Some(object value)
+            => new Option(value);
     }
 
     /// <summary>
-    /// Like Option, but forces type
+    /// Like Option, but with implicit type
     /// </summary>
     /// <typeparam name="T">Type to be matched</typeparam>
     public struct Option<T>
     {
+        /// <summary>
+        /// Base encapsulation
+        /// </summary>
         private readonly Option option;
 
         internal Option(T value)
@@ -95,24 +148,55 @@ namespace Subble.Core.Func
         internal Option(Option option)
             => this.option = option;
 
+        /// <summary>
+        /// Check value
+        /// </summary>
+        /// <returns>False, if null or type don't match</returns>
         public bool HasValue()
             => option.HasValue<T>();
 
+        /// <summary>
+        /// Check value
+        /// </summary>
+        /// <param name="value">value or default</param>
+        /// <returns>False, if null or type don't match</returns>
         public bool HasValue(out T value)
             => option.HasValue(out value);
 
+        /// <summary>
+        /// Invoke function based value
+        /// </summary>
+        /// <param name="None">Invoked if null or type don't match</param>
+        /// <param name="Some">Invoked if has value</param>
+        /// <returns></returns>
         public Option<T> Match(Action None, Action<T> Some)
         {
             option.Match(None, Some);
             return this;
         }
 
+        /// <summary>
+        /// Invoke action if has value
+        /// </summary>
+        /// <param name="Some"></param>
+        /// <returns></returns>
         public Option<T> Some(Action<T> Some)
             => Match(Void, Some);
 
+        /// <summary>
+        /// Invoke action if null or type won't match
+        /// </summary>
+        /// <param name="None"></param>
+        /// <returns></returns>
         public Option<T> None(Action None)
             => Match(None, Void);
 
+        /// <summary>
+        /// Cast value to another type
+        /// </summary>
+        /// <typeparam name="TResult">result type</typeparam>
+        /// <param name="func">function to return cast result</param>
+        /// <returns></returns>
         public Option<TResult> Cast<TResult>(Func<T, TResult> func)
         {
             if (HasValue(out var res))

@@ -3,6 +3,10 @@ using System;
 
 namespace Subble.Core.Logger
 {
+    /// <summary>
+    /// ILog default implementation,
+    /// contains helper methods to create log entries
+    /// </summary>
     public class SubbleLog : ILog
     {
         public SubbleLog()

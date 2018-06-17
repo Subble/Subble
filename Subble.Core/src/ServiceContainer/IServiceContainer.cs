@@ -7,7 +7,8 @@ using System.Collections.Generic;
 namespace Subble.Core.ServiceContainer
 {
     /// <summary>
-    /// Manage known services
+    /// Manage known services, 
+    /// usualy implemented by Host
     /// </summary>
     public interface IServiceContainer
     {

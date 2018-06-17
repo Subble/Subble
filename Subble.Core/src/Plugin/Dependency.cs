@@ -2,6 +2,9 @@
 
 namespace Subble.Core.Plugin
 {
+    /// <summary>
+    /// Declares a dependency, used by host to reoder load priority
+    /// </summary>
     public class Dependency
     {
         public Dependency(Type type, uint major, uint minor, uint patch)
@@ -16,15 +19,14 @@ namespace Subble.Core.Plugin
             Version = version;
         }
 
-        public Dependency(Type type)
-        {
-            DependencyType = type;
-            Version = new SemVersion(0, 0, 0);
-        }
-
-
+        /// <summary>
+        /// Service type
+        /// </summary>
         public Type DependencyType { get; }
 
+        /// <summary>
+        /// required comptability with version
+        /// </summary>
         public SemVersion Version { get; }
     }
 }

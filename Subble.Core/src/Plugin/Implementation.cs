@@ -11,7 +11,14 @@
             Version = version;
         }
 
+        /// <summary>
+        /// Instance
+        /// </summary>
         public object Value { get; }
+
+        /// <summary>
+        /// Instance version
+        /// </summary>
         public SemVersion Version { get; }
     }
 }

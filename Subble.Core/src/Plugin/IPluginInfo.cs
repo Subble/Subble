@@ -2,6 +2,9 @@
 
 namespace Subble.Core.Plugin
 {
+    /// <summary>
+    /// Metadata for plugin
+    /// </summary>
     public interface IPluginInfo
     {
         /// <summary>

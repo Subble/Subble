@@ -4,6 +4,10 @@ using Subble.Core.Func;
 
 namespace Subble.Core.Events
 {
+    /// <summary>
+    /// ISubbleEvent implementation
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class SubbleEvent<T> : ISubbleEvent<T>
     {
         public SubbleEvent()

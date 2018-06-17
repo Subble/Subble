@@ -3,6 +3,10 @@ using System.Linq;
 
 namespace Subble.Core.Plugin
 {
+    /// <summary>
+    /// Semantic Version 2.0 enforcer
+    /// https://semver.org/
+    /// </summary>
     public struct SemVersion : IEquatable<SemVersion>, IComparable<SemVersion>
     {
         public SemVersion(uint major, uint minor, uint patch)

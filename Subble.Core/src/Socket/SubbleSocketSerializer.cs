@@ -28,8 +28,8 @@ namespace Subble.Core.Socket
         /// </summary>
         public static SemVersion Version
             => new SemVersion(
-                    VERSION_MAJOR, 
-                    VERSION_MINOR, 
+                    VERSION_MAJOR,
+                    VERSION_MINOR,
                     VERSION_PATCH
                 );
 
