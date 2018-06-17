@@ -1,0 +1,79 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Subble\n\n\nA broken music player\n\n\n\n\nOverview\n\n\nSubble is developed with the aim to be a total modular music manager/player, this is accomplished by having a core library with a list of base interfaces that will be implemented by external plugins. This means that in its core Subble can only load and manage plugins.\n\n\nInstall\n\n\nTODO...\n\n\nBuild\n\n\ngit clone --recurse-submodules https://github.com/Subble/Subble.git\n\n\n\n\nwindows: \nbuild.ps1\n\n\nlinux: \nbuild.sh\n\n\n\n\ndotnet Build/Subble.dll",
+            "title": "Home"
+        },
+        {
+            "location": "/#subble",
+            "text": "A broken music player",
+            "title": "Subble"
+        },
+        {
+            "location": "/#overview",
+            "text": "Subble is developed with the aim to be a total modular music manager/player, this is accomplished by having a core library with a list of base interfaces that will be implemented by external plugins. This means that in its core Subble can only load and manage plugins.",
+            "title": "Overview"
+        },
+        {
+            "location": "/#install",
+            "text": "TODO...",
+            "title": "Install"
+        },
+        {
+            "location": "/#build",
+            "text": "git clone --recurse-submodules https://github.com/Subble/Subble.git   windows:  build.ps1  linux:  build.sh   dotnet Build/Subble.dll",
+            "title": "Build"
+        },
+        {
+            "location": "/plugins/",
+            "text": "Plugins\n\n\n\n\nInstallation\n\n\nTo install a Plugin just copy it folder to the \nPlugins\n folder in the Subble directory.\nEach plugin should have is own folder and the entry plugin file should be named as \nPlugin.[GUID].dll\n.\n\n\nSo the directory structure should look like:\n\n\nSubble\n  Plugins\n    MyPlugin\n        Plugin.d204b7a4-a73b-4d2b-8ca2-4ba45a888c59.dll\n    OtherPlugin\n        Plugin.59025e0f-438d-4334-a0f6-ff9c68794439.dll\n\n\n\nPlugin types\n\n\nWe can divide the plugins in 2 main groups:\n\n\n\n\n\n\nFunction Plugins:\n    This are the plugins that extend functionality of the core application\n\n\n\n\n\n\nService Plugins:\n    This are the plugins that create and register new services to be used by other plugins\n\n\n\n\n\n\nFunction plugins usually depends on other services plugins, its the user responsibility to make sure that all required dependencies are present\n\n\nPlugin development\n\n\nPlugins are developed using \n.NET Core\n and referencing the \nSubble.Core.dll\n library present in the Subble directory, check the \nquick-start guide\n to see a basic example of a working plugin\n\n\nThe development can be done in any OS supported by .net core, \nclick here\n to see a list of supported OS",
+            "title": "Overview"
+        },
+        {
+            "location": "/plugins/#plugins",
+            "text": "",
+            "title": "Plugins"
+        },
+        {
+            "location": "/plugins/#installation",
+            "text": "To install a Plugin just copy it folder to the  Plugins  folder in the Subble directory.\nEach plugin should have is own folder and the entry plugin file should be named as  Plugin.[GUID].dll .  So the directory structure should look like:  Subble\n  Plugins\n    MyPlugin\n        Plugin.d204b7a4-a73b-4d2b-8ca2-4ba45a888c59.dll\n    OtherPlugin\n        Plugin.59025e0f-438d-4334-a0f6-ff9c68794439.dll",
+            "title": "Installation"
+        },
+        {
+            "location": "/plugins/#plugin-types",
+            "text": "We can divide the plugins in 2 main groups:    Function Plugins:\n    This are the plugins that extend functionality of the core application    Service Plugins:\n    This are the plugins that create and register new services to be used by other plugins    Function plugins usually depends on other services plugins, its the user responsibility to make sure that all required dependencies are present",
+            "title": "Plugin types"
+        },
+        {
+            "location": "/plugins/#plugin-development",
+            "text": "Plugins are developed using  .NET Core  and referencing the  Subble.Core.dll  library present in the Subble directory, check the  quick-start guide  to see a basic example of a working plugin  The development can be done in any OS supported by .net core,  click here  to see a list of supported OS",
+            "title": "Plugin development"
+        },
+        {
+            "location": "/plugins/quick-start/",
+            "text": "todo...",
+            "title": "Quick-Start"
+        },
+        {
+            "location": "/plugins/events/",
+            "text": "Overview\n\n\nSubble communicates with plugins and external applications using a event based system. Every action emits an event that can be consumed by third parties.\n\n\nAn event has the following properties:\n\n\n\n\nID: a unique ID generated by the host\n\n\nType: event type\n\n\nSource: the source name that generated the event\n\n\nTimestamp: Date and time of when the event was emitted\n\n\nPayload: Extra data associated to event\n\n\n\n\nConsuming Events\n\n\nA plugin can consume any event by subscribing to it from the \nISubbleHost\n\n\nIn the following example we create a simple plugin that every time a log entry is created, increments a variable:\n\n\n```csharp\npublic class LogCountPlugin : ISubblePlugin\n{\n    public IPluginInfo Info => new MyPluginInfo();\n    public SemVersion Version => (0, 1, 0);\n    public long LoadPriority => 99;\n    public IEnumerable<Dependency> Dependencies\n        => new List<Dependency>();\n\n    public bool Initialize(ISubbleHost host)\n    {\n        host.Events\n            .Where(e => e.Type == EventsType.Core.LOG)\n            .Subscribe(OnNewLogEntry);\n    }\n\n    private static int _count = 0;\n    private static void OnNewLogEntry(ISubbleEvent e)\n    {\n        _count++;\n    }\n}\n```\n\n\n\nProducing Events\n\n\nA Plugin can also create events, by calling the method \nEmitEvent\n from \nISubbleHost\n\n\nContinuing the last example we can modify it to emit a event when the count reach 10:\n\n\n```csharp\npublic class LogCountPlugin : ISubblePlugin\n{\n    public IPluginInfo Info => new MyPluginInfo();\n    public SemVersion Version => (0, 1, 0);\n    public long LoadPriority => 99;\n    public IEnumerable<Dependency> Dependencies\n        => new List<Dependency>();\n\n    public bool Initialize(ISubbleHost host)\n    {\n        _host = host;\n\n        host.Events\n            .Where(e => e.Type == EventsType.Core.LOG)\n            .Subscribe(OnNewLogEntry);\n    }\n\n    private ISubbleHost _host;\n    private int _count = 0;\n    private void OnNewLogEntry(ISubbleEvent e)\n    {\n        _count++;\n        if(_count == 10)\n        {\n            _host.EmitEvent(\"ON_LOG_MILESTONE\", \"LogCountPlugin\", \"Log count has reached 10!\")\n        }\n    }\n}\n```",
+            "title": "Events"
+        },
+        {
+            "location": "/plugins/events/#overview",
+            "text": "Subble communicates with plugins and external applications using a event based system. Every action emits an event that can be consumed by third parties.  An event has the following properties:   ID: a unique ID generated by the host  Type: event type  Source: the source name that generated the event  Timestamp: Date and time of when the event was emitted  Payload: Extra data associated to event",
+            "title": "Overview"
+        },
+        {
+            "location": "/plugins/events/#consuming-events",
+            "text": "A plugin can consume any event by subscribing to it from the  ISubbleHost  In the following example we create a simple plugin that every time a log entry is created, increments a variable:  ```csharp\npublic class LogCountPlugin : ISubblePlugin\n{\n    public IPluginInfo Info => new MyPluginInfo();\n    public SemVersion Version => (0, 1, 0);\n    public long LoadPriority => 99;\n    public IEnumerable<Dependency> Dependencies\n        => new List<Dependency>();\n\n    public bool Initialize(ISubbleHost host)\n    {\n        host.Events\n            .Where(e => e.Type == EventsType.Core.LOG)\n            .Subscribe(OnNewLogEntry);\n    }\n\n    private static int _count = 0;\n    private static void OnNewLogEntry(ISubbleEvent e)\n    {\n        _count++;\n    }\n}\n```",
+            "title": "Consuming Events"
+        },
+        {
+            "location": "/plugins/events/#producing-events",
+            "text": "A Plugin can also create events, by calling the method  EmitEvent  from  ISubbleHost  Continuing the last example we can modify it to emit a event when the count reach 10:  ```csharp\npublic class LogCountPlugin : ISubblePlugin\n{\n    public IPluginInfo Info => new MyPluginInfo();\n    public SemVersion Version => (0, 1, 0);\n    public long LoadPriority => 99;\n    public IEnumerable<Dependency> Dependencies\n        => new List<Dependency>();\n\n    public bool Initialize(ISubbleHost host)\n    {\n        _host = host;\n\n        host.Events\n            .Where(e => e.Type == EventsType.Core.LOG)\n            .Subscribe(OnNewLogEntry);\n    }\n\n    private ISubbleHost _host;\n    private int _count = 0;\n    private void OnNewLogEntry(ISubbleEvent e)\n    {\n        _count++;\n        if(_count == 10)\n        {\n            _host.EmitEvent(\"ON_LOG_MILESTONE\", \"LogCountPlugin\", \"Log count has reached 10!\")\n        }\n    }\n}\n```",
+            "title": "Producing Events"
+        }
+    ]
+}
