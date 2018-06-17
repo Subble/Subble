@@ -6,4 +6,7 @@ pages:
     - Overview: plugins/index.md
     - Quick-Start: plugins/quick-start.md
     - Events: plugins/events.md
+  - Network:
+    - Overview: network/index.md
+    - SubbleSocket: network/subble-socket/1.0.0/index.md
 theme: readthedocs
