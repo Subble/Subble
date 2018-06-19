@@ -16,7 +16,7 @@ A plugin can consume any event by subscribing to it from the `ISubbleHost`
 
 In the following example we create a simple plugin that every time a log entry is created, increments a variable:
 
-    ```csharp
+    ```c#
     public class LogCountPlugin : ISubblePlugin
     {
         public IPluginInfo Info => new MyPluginInfo();
@@ -46,7 +46,7 @@ A Plugin can also create events, by calling the method `EmitEvent` from `ISubble
 
 Continuing the last example we can modify it to emit a event when the count reach 10:
 
-    ```csharp
+    ```c#
     public class LogCountPlugin : ISubblePlugin
     {
         public IPluginInfo Info => new MyPluginInfo();

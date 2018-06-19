@@ -20,7 +20,7 @@ namespace Subble.Core.Events
         string Type { get; }
 
         /// <summary>
-        /// Paylod of event
+        /// Payload of event
         /// </summary>
         Option Payload { get; }
 
@@ -30,7 +30,7 @@ namespace Subble.Core.Events
         DateTime Timestamp { get; }
 
         /// <summary>
-        /// Event emiter, usualy plugin name
+        /// Event emiter, usually plugin name
         /// </summary>
         string Source { get; }
     }
