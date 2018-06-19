@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Subble.Core.Socket
+﻿namespace Subble.Core.Socket
 {
     public enum RequestCode
     {

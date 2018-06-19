@@ -1,4 +1,5 @@
 ﻿using Subble.Core.Func;
+using System;
 using System.Threading.Tasks;
 
 namespace Subble.Core.Config
@@ -14,12 +15,12 @@ namespace Subble.Core.Config
         string ConfigFilePath { get; }
 
         /// <summary>
-        /// Attemps to return a value for the specified key
+        /// Attempts to return a value for the specified key
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key">key of requested value</param>
         /// <returns>Value, encapsulated in an optional type</returns>
-        Option<T> Get<T>(string key);
+        Option<T> Get<T>(string key) where T: IConvertible;
 
         /// <summary>
         /// Sets the value for a key, value is overwritten if exists
@@ -27,7 +28,7 @@ namespace Subble.Core.Config
         /// <typeparam name="T"></typeparam>
         /// <param name="key">the key</param>
         /// <param name="value">the value</param>
-        void Set<T>(string key, T value);
+        void Set<T>(string key, T value) where T: IConvertible;
 
         /// <summary>
         /// Delete a key-value pair
@@ -37,10 +38,10 @@ namespace Subble.Core.Config
         bool Delete(string key);
 
         /// <summary>
-        /// Checks if key is avaible
+        /// Checks if key is available
         /// </summary>
         /// <param name="key">the key</param>
         /// <returns>True if key exists</returns>
-        bool IsAvaible(string key);
+        bool IsAvailable(string key);
     }
 }
