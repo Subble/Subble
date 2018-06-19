@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>SubbleSocket - Subble</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "SubbleSocket";
+    var mkdocs_page_input_path = "network\\subble-socket\\1.0.0\\index.md";
+    var mkdocs_page_url = "/network/subble-socket/1.0.0/";
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Subble</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Plugins</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../plugins/">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../plugins/quick-start/">Quick-Start</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../plugins/events/">Events</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Network</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../">Overview</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">SubbleSocket</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#subblesocket">SubbleSocket</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#overview">Overview</a></li>
+        
+            <li><a class="toctree-l4" href="#serialization">Serialization</a></li>
+        
+            <li><a class="toctree-l4" href="#handshake">Handshake</a></li>
+        
+            <li><a class="toctree-l4" href="#handshake-request">Handshake Request</a></li>
+        
+            <li><a class="toctree-l4" href="#handshake-response">Handshake Response</a></li>
+        
+            <li><a class="toctree-l4" href="#events">Events</a></li>
+        
+            <li><a class="toctree-l4" href="#error-handling">Error Handling</a></li>
+        
+            <li><a class="toctree-l4" href="#client-id">Client ID</a></li>
+        
+            <li><a class="toctree-l4" href="#subble-codes">Subble Codes</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Subble</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Network &raquo;</li>
+        
+      
+    
+    <li>SubbleSocket</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/Subble/edit/master/docs/network/subble-socket/1.0.0/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="subblesocket">SubbleSocket</h1>
+<blockquote>
+<p>Version 1.0.0</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>The SubbleSocket protocol enables a two-way communication between a ISubbleHost instance and a third party client.
+The security model is out of scope of this document, being that the implementor responsibility.
+This protocol aims at allowing external applications to consume and produce events in a Subble instance.</p>
+<p>Apart of the initial handshake, when a client do a request it is not guarantee that the next message from the server will be related. If the clients wants to track the request it should append data, that data will also be append by server in the related request</p>
+<p>The protocol can be divided in two parts:
+    - Handshake: the clients connects and send list of required events
+    - Event Consume/Produce: the client listens for events and / or produce events</p>
+<p><strong>Encoding</strong></p>
+<p>Every text used in this format must be in UTF-8</p>
+<p><strong>Case sensitive</strong></p>
+<p>Every text is case sensitive except when explicitly said in this document.</p>
+<h2 id="serialization">Serialization</h2>
+<p>the server must support <a href="https://msgpack.org/">MessagePack</a> and should also support <a href="http://json.org/">JSON</a>. The implementor is free to support custom serializers, but must not use the values between 0 (zero) and 50 (fifty) because they are reserved for future requirements. the current serializers map is as follow:</p>
+<ul>
+<li>0: MessagePack</li>
+<li>1: JSON</li>
+<li>2 - 50: Reserved</li>
+<li>51-255: Implementor defined</li>
+</ul>
+<p>for the purpose of readability this document will the JSON format in examples.</p>
+<h2 id="handshake">Handshake</h2>
+<p>When a Clients connects it must send the handshake initial request, the server will not continue with any communication until the initial handshake is completed. A appropriate response is trigger by the server</p>
+<h2 id="handshake-request">Handshake Request</h2>
+<p>The initial client request is composed by:</p>
+<pre><code>1 byte : Request code, 1
+1 byte : Protocol Major Version
+1 byte : Protocol Minor Version
+1 byte : Protocol Patch Version
+
+4 + N byte : Client ID
+1 + N byte : Value separator
+4 + N byte : Subscribe list
+4 + N byte : Produce list
+N byte : Request data
+</code></pre>
+<p><strong>Request code</strong>
+The request code, to start the handshake the request is always 1</p>
+<p><strong>Protocol Major, Minor and Patch Version</strong></p>
+<p>The first three bytes are the version used by the client, if the server don't support the specified version a error response is trigger,
+see <a href="#handshake-response">Handshake Response</a> for more details.</p>
+<p><strong>Client ID</strong></p>
+<p>A id that identify the client, see <a href="#client-id">Client ID section</a> for details</p>
+<p><strong>Value separator</strong></p>
+<p>Defines the value that separates the subscribe and produce list.
+The length is 1 + n bytes, being the first byte the value that set the length of N</p>
+<p><strong>Subscribe list</strong></p>
+<p>If the client want to receive events of a certain type it must pass the names to subscribe.
+The names should be in UTF-8 format and be separated by the value defined in 'Value separator'.</p>
+<p><strong>Produce list</strong></p>
+<p>If the client want to generate new events it must pass the event type name.
+The names should be in UTF-8 format and be separated by the value defined in 'Value separator'.</p>
+<p><strong>Request data</strong></p>
+<p>Custom message that the client can append to the request</p>
+<h2 id="handshake-response">Handshake Response</h2>
+<p>After the client sends the Handshake request the server responds, the first byte is a <a href="#handshake-codes">Response code</a>, and the next four bytes are the length of UTF-8 message. The response message is only present when required.
+We can visualize the response as:</p>
+<pre><code>1 byte: Response code, ()
+4 + N bytes: Response message
+N bytes: Request data
+</code></pre>
+<h2 id="events">Events</h2>
+<p>Every time a event occurs, that the client has subscribe during handshake, a new request is made by the server
+the request will have the following format</p>
+<pre><code>1 byte: Event request code
+1 byte: Serialization format
+8 byte: Date time
+4 + N byte: Event type name
+4 + N byte: Event GUID
+4 + N byte: Source name
+4 + N byte: Payload
+N byte: Request data
+</code></pre>
+<p><strong>Event request code</strong></p>
+<p>the event status, see <a href="#events-codes">Request codes</a> for details.</p>
+<p><strong>Serialization format</strong></p>
+<p>The serialization format used on payload, see <a href="#serialization">Serialization</a>.</p>
+<p><strong>Date time</strong></p>
+<p>The date and time that the event occur, it is in unix EPOCH time format.</p>
+<p><strong>Event type name</strong>
+The name that classifies the event</p>
+<p><strong>Event GUID</strong>
+Event unique ID generated by the server</p>
+<p><strong>Source name</strong>
+The name of the plugin/client that generate the event</p>
+<p><strong>Payload</strong>
+event data</p>
+<p><strong>Request data</strong>
+If the event was created by this client and it contains </p>
+<h3 id="produce-events">Produce events</h3>
+<p>The client is able to produce events, at every request to create an event the server responds with the event data</p>
+<p>To create an event the client must do a request with the following structure:</p>
+<pre><code>1 byte: request code, 27
+4 + N byte: Client ID
+1 byte: Serialization format
+4 + N byte: Event type name
+4 + N byte: Payload
+N byte: Request Data
+</code></pre>
+<p><strong>Request code</strong></p>
+<p>The code of the request, 27 to create event, see <a href="#events-codes">Request codes</a> for more details</p>
+<p><strong>Client ID</strong></p>
+<p>The client ID, see <a href="#client-id">Client ID section</a> for details</p>
+<p><strong>Serialization format</strong></p>
+<p>The serialization format used on payload, see <a href="#serialization">Serialization</a>.</p>
+<p><strong>Event type name</strong>
+The name that classifies the event</p>
+<p><strong>Payload</strong>
+Event payload</p>
+<p><strong>Request data</strong>
+Data to be return by the server</p>
+<h2 id="error-handling">Error Handling</h2>
+<p>Every time the client does a request that generates a error, the server should create a new request to that client with the error details
+Request details:</p>
+<pre><code>1 byte: Request Code
+4 + N bytes: Error Message
+N bytes: request data
+</code></pre>
+<h2 id="client-id">Client ID</h2>
+<p>A UTF-8 text that will identify the client, this value should be generated by the server.
+The length is 4 + n bytes, being the first 4 byte the value that set the length of N
+If the length is zero, the server may reject the handshake or generate a new ID that will be returned on the response
+It is not possible to change value after the Handshake.
+This value should be present in every client requests</p>
+<p><strong>Client ID Generation</strong>
+The server if free to generate new client id as he sees fit as long as no client id is repeat</p>
+<h2 id="subble-codes">Subble Codes</h2>
+<p>The code list can be divided in 3 major groups:</p>
+<ul>
+<li>0 -&gt; 25 : Handshake codes</li>
+<li>26 -&gt; 100: Events codes</li>
+<li>101 -&gt; 255: Other codes</li>
+</ul>
+<h3 id="handshake-codes">Handshake codes</h3>
+<ul>
+<li>
+<p>1: Request Access:
+The code sent in the request to start the handshake</p>
+</li>
+<li>
+<p>2: <strong>OK</strong>: 
+The handshake is completed and the server is ok to receive new request</p>
+</li>
+<li>
+<p>3: <strong>OK</strong> - New User ID created:
+The handshake is completed and the server has successfully created a new client ID, check the message for the client ID</p>
+</li>
+<li>
+<p>10: <strong>NOT OK</strong> - IP not allowed: 
+Server is actively denying the client IP, check a possible whitelist or blacklist</p>
+</li>
+<li>
+<p>11: <strong>NOT OK</strong> - New clients not allowed: 
+The Client ID was not defined and the server has the generation of new client ID disabled</p>
+</li>
+<li>
+<p>12: <strong>NOT OK</strong> - Invalid client ID:
+The Client was defined, but the server don't recognize it</p>
+</li>
+<li>
+<p>25: <strong>NOT OK</strong> - Unknown handshake Error: 
+Server refused the connection for unknown reasons, check response message for details</p>
+</li>
+</ul>
+<h3 id="events-codes">Events Codes</h3>
+<ul>
+<li>
+<p>26: <strong>Server Event</strong>: 
+Event created in server side, events created by other clients will also have this code</p>
+</li>
+<li>
+<p>27: <strong>Client Event</strong>: 
+Event created by client</p>
+</li>
+<li>
+<p>52: <strong>Unknown Server Error</strong>: 
+Event was not created by server</p>
+</li>
+<li>
+<p>51: <strong>Event not declared</strong>: 
+Event name was not defined during handshake</p>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../../" class="btn btn-neutral" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/Subble/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../../" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/require.js"></script>
+      <script src="../../../search/search.js"></script>
+
+</body>
+</html>
