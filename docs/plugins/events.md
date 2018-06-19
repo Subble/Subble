@@ -16,29 +16,29 @@ A plugin can consume any event by subscribing to it from the `ISubbleHost`
 
 In the following example we create a simple plugin that every time a log entry is created, increments a variable:
 
-    ```c#
-    public class LogCountPlugin : ISubblePlugin
+```c#
+public class LogCountPlugin : ISubblePlugin
+{
+    public IPluginInfo Info => new MyPluginInfo();
+    public SemVersion Version => (0, 1, 0);
+    public long LoadPriority => 99;
+    public IEnumerable<Dependency> Dependencies
+        => new List<Dependency>();
+
+    public bool Initialize(ISubbleHost host)
     {
-        public IPluginInfo Info => new MyPluginInfo();
-        public SemVersion Version => (0, 1, 0);
-        public long LoadPriority => 99;
-        public IEnumerable<Dependency> Dependencies
-            => new List<Dependency>();
-
-        public bool Initialize(ISubbleHost host)
-        {
-            host.Events
-                .Where(e => e.Type == EventsType.Core.LOG)
-                .Subscribe(OnNewLogEntry);
-        }
-
-        private static int _count = 0;
-        private static void OnNewLogEntry(ISubbleEvent e)
-        {
-            _count++;
-        }
+        host.Events
+            .Where(e => e.Type == EventsType.Core.LOG)
+            .Subscribe(OnNewLogEntry);
     }
-    ```
+
+    private static int _count = 0;
+    private static void OnNewLogEntry(ISubbleEvent e)
+    {
+        _count++;
+    }
+}
+```
 
 # Producing Events
 
@@ -46,33 +46,33 @@ A Plugin can also create events, by calling the method `EmitEvent` from `ISubble
 
 Continuing the last example we can modify it to emit a event when the count reach 10:
 
-    ```c#
-    public class LogCountPlugin : ISubblePlugin
+```c#
+public class LogCountPlugin : ISubblePlugin
+{
+    public IPluginInfo Info => new MyPluginInfo();
+    public SemVersion Version => (0, 1, 0);
+    public long LoadPriority => 99;
+    public IEnumerable<Dependency> Dependencies
+        => new List<Dependency>();
+
+    public bool Initialize(ISubbleHost host)
     {
-        public IPluginInfo Info => new MyPluginInfo();
-        public SemVersion Version => (0, 1, 0);
-        public long LoadPriority => 99;
-        public IEnumerable<Dependency> Dependencies
-            => new List<Dependency>();
+        _host = host;
 
-        public bool Initialize(ISubbleHost host)
+        host.Events
+            .Where(e => e.Type == EventsType.Core.LOG)
+            .Subscribe(OnNewLogEntry);
+    }
+
+    private ISubbleHost _host;
+    private int _count = 0;
+    private void OnNewLogEntry(ISubbleEvent e)
+    {
+        _count++;
+        if(_count == 10)
         {
-            _host = host;
-
-            host.Events
-                .Where(e => e.Type == EventsType.Core.LOG)
-                .Subscribe(OnNewLogEntry);
-        }
-
-        private ISubbleHost _host;
-        private int _count = 0;
-        private void OnNewLogEntry(ISubbleEvent e)
-        {
-            _count++;
-            if(_count == 10)
-            {
-                _host.EmitEvent("ON_LOG_MILESTONE", "LogCountPlugin", "Log count has reached 10!")
-            }
+            _host.EmitEvent("ON_LOG_MILESTONE", "LogCountPlugin", "Log count has reached 10!")
         }
     }
-    ```
+}
+```
