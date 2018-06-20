@@ -7,3 +7,6 @@
 [submodule "Plugins/SocketCommunication"]
 	path = Plugins/SocketCommunication
 	url = https://github.com/Subble/SocketCommunication.git
+[submodule "Plugins/AccessManager"]
+	path = Plugins/AccessManager
+	url = https://github.com/Subble/AccessManager.git
