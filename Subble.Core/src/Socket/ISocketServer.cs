@@ -9,13 +9,19 @@ namespace Subble.Core.Socket
     /// <summary>
     /// Server of SubbleSocket
     /// </summary>
-    public interface ISocketServer : IDisposable
+    public interface ISocketServer
     {
         /// <summary>
         /// Start socket server
         /// </summary>
         /// <returns>True, if the server is running</returns>
         Task<bool> Start();
+
+        /// <summary>
+        /// Close all socket connections
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> Close();
 
         /// <summary>
         /// Indicates if the server is running
@@ -50,5 +56,10 @@ namespace Subble.Core.Socket
         /// <param name="request">request to be sent</param>
         /// <returns>True if sent</returns>
         Task<bool> SendRequest(IRequest request);
+
+        /// <summary>
+        /// Collection of connected clients
+        /// </summary>
+        IEnumerable<ISocketClient> ConnectedClients { get; }
     }
 }
