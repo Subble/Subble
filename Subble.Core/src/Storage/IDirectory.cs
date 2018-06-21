@@ -35,18 +35,18 @@ namespace Subble.Core.Storage
         /// Set the default temporary directory
         /// </summary>
         /// <param name="directory"></param>
-        void SetTempFolder(DirectoryInfo directory);
+        bool SetTempFolder(DirectoryInfo directory);
 
         /// <summary>
         /// Set the local directory path
         /// </summary>
         /// <param name="directory"></param>
-        void SetLocalDirectory(DirectoryInfo directory);
+        bool SetLocalDirectory(DirectoryInfo directory);
 
         /// <summary>
         /// Set the shared directory path
         /// </summary>
         /// <param name="directory"></param>
-        void SetSyncDirectory(DirectoryInfo directory);
+        bool SetSyncDirectory(DirectoryInfo directory);
     }
 }
