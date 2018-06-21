@@ -10,3 +10,6 @@
 [submodule "Plugins/AccessManager"]
 	path = Plugins/AccessManager
 	url = https://github.com/Subble/AccessManager.git
+[submodule "Plugins/DirectoryAccess"]
+	path = Plugins/DirectoryAccess
+	url = https://github.com/Subble/DirectoryAccess.git
