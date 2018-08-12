@@ -2,32 +2,32 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>/</loc>
-     <lastmod>2018-06-19</lastmod>
+     <lastmod>2018-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/plugins/</loc>
-     <lastmod>2018-06-19</lastmod>
+     <lastmod>2018-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/plugins/quick-start/</loc>
-     <lastmod>2018-06-19</lastmod>
+     <lastmod>2018-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/plugins/events/</loc>
-     <lastmod>2018-06-19</lastmod>
+     <lastmod>2018-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/network/</loc>
-     <lastmod>2018-06-19</lastmod>
+     <lastmod>2018-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/network/subble-socket/1.0.0/</loc>
-     <lastmod>2018-06-19</lastmod>
+     <lastmod>2018-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
