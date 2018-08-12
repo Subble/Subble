@@ -26,7 +26,7 @@ namespace Subble.Service {
             InitialisePlugins(plugins, host);
         }
 
-        private static void InitialisePlugins(IEnumerable<ISubblePlugin> plugins, ISubbleHost host)
+        private static void InitialisePlugins(IEnumerable<ISubblePlugin> plugins, ISubbleHost host, bool ignoreDependencies = false)
         {
             var pluginQueue = new Queue<ISubblePlugin>(plugins.OrderBy(p => p.LoadPriority));
             var skippedPlugins = new List<ISubblePlugin>();
@@ -36,7 +36,7 @@ namespace Subble.Service {
             {
                 var plugin = pluginQueue.Dequeue();
 
-                if(!CheckDependencies(host, plugin))
+                if(!ignoreDependencies && !CheckDependencies(host, plugin))
                 {
                     skippedPlugins.Add(plugin);
                     continue;
@@ -59,11 +59,8 @@ namespace Subble.Service {
             }
             else if(skippedPlugins.Count > 0)
             {
-                foreach (var p in skippedPlugins)
-                {
-                    EmitWarning(host, "Failed to load dependencies for plugin " +
-                       $"'{p.Info.Name}' with guid: {p.Info.GUID}");
-                }
+                EmitWarning(host, "Failed to load dependencies for some plugins");
+                InitialisePlugins(skippedPlugins, host, true);
             }
         }
 
