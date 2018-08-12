@@ -65,5 +65,35 @@
             /// </summary>
             public const string REMOVE = PRE + "REMOVE";
         }
+
+        public static class MediaPlayer
+        {
+            private const string PRE = "EVENT_MEDIA_PLAYER_";
+
+            /// <summary>
+            /// A new file started playing
+            /// </summary>
+            public const string NEW_PLAY = PRE + "NEW_PLAY";
+
+            /// <summary>
+            /// Player stoped
+            /// </summary>
+            public const string STOP = PRE + "STOP";
+
+            /// <summary>
+            /// Player paused
+            /// </summary>
+            public const string PAUSE = PRE + "PAUSE";
+
+            /// <summary>
+            /// Player started
+            /// </summary>
+            public const string PLAY = PRE + "PLAY";
+
+            /// <summary>
+            /// When the player status change
+            /// </summary>
+            public const string STATUS_CHANGE = PRE + "STATUS_CHANGE";
+        }
     }
 }

@@ -13,3 +13,6 @@
 [submodule "Plugins/DirectoryAccess"]
 	path = Plugins/DirectoryAccess
 	url = https://github.com/Subble/DirectoryAccess.git
+[submodule "Plugins/BasicMusicPlayer"]
+	path = Plugins/BasicMusicPlayer
+	url = https://github.com/Subble/BasicMusicPlayer.git
