@@ -10,43 +10,43 @@ namespace Subble.Core.Storage
         /// <summary>
         /// Temporary folder, that is frequently deleted
         /// </summary>
-        DirectoryInfo TempFolder { get; }
+        DirectoryInfo TempDirectory { get; }
 
         /// <summary>
-        /// Diretory to store data local to this instalation, 
-        /// this files should not sync between instances
+        /// Diretory to store data local to this instalation.
+        /// This files should not sync between instances.
         /// </summary>
-        DirectoryInfo LocalDirectory { get; }
+        DirectoryInfo PrivateDirectory { get; }
 
         /// <summary>
         /// Directory to store data that may be sync between instances
         /// </summary>
-        DirectoryInfo SyncDiretory { get; }
+        DirectoryInfo PublicDirectory { get; }
 
         /// <summary>
         /// Returns the directory reserved to that plugin
         /// </summary>
         /// <param name="pluginGuid">guid of plugin</param>
-        /// <param name="sync">set if directory should sync between instances</param>
+        /// <param name="isPublic">set if directory should sync between instances</param>
         /// <returns></returns>
-        DirectoryInfo GetDirectory(string pluginGuid, bool sync = false);
+        DirectoryInfo GetDirectory(string pluginGuid, bool isPublic = false);
 
         /// <summary>
         /// Set the default temporary directory
         /// </summary>
         /// <param name="directory"></param>
-        bool SetTempFolder(DirectoryInfo directory);
+        bool SetTempDirectory(DirectoryInfo directory);
 
         /// <summary>
         /// Set the local directory path
         /// </summary>
         /// <param name="directory"></param>
-        bool SetLocalDirectory(DirectoryInfo directory);
+        bool SetPrivateDirectory(DirectoryInfo directory);
 
         /// <summary>
         /// Set the shared directory path
         /// </summary>
         /// <param name="directory"></param>
-        bool SetSyncDirectory(DirectoryInfo directory);
+        bool SetPublicDirectory(DirectoryInfo directory);
     }
 }
