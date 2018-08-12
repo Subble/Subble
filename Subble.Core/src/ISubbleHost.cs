@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Subble.Core.Events;
 using Subble.Core.Plugin;
 using Subble.Core.ServiceContainer;
@@ -43,5 +44,10 @@ namespace Subble.Core
         /// <param name="payload">Extra info to be included in the event</param>
         /// <returns>Details of event</returns>
         SubbleEmitResponse EmitEvent<T>(string type, string source, T payload);
+
+        /// <summary>
+        /// Working directory
+        /// </summary>
+        DirectoryInfo WorkingDirectory { get; }
     }
 }

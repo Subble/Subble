@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Subble.Core;
 using Subble.Core.Events;
@@ -21,6 +23,9 @@ namespace Subble
             EventSource = new List<IObserver<ISubbleEvent>>();
             Events = InitEvents();
             ServiceContainer = new ServiceContainer(this);
+
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            WorkingDirectory = new DirectoryInfo(path);
         }
 
         public SemVersion Version
@@ -30,6 +35,8 @@ namespace Subble
         public IObservable<ISubbleEvent> Events { get; }
 
         public IServiceContainer ServiceContainer { get; }
+
+        public DirectoryInfo WorkingDirectory { get; }
 
         private IObservable<ISubbleEvent> InitEvents()
         {
