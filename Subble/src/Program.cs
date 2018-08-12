@@ -18,8 +18,7 @@ namespace Subble
             var host = new Host();
             SubscribeLogs(host);
             host.Start(path);
-
-            Console.ReadKey();
+            AwaitUserInput(host);
         }
 
         private static string GetRunningDirectory()
@@ -59,6 +58,31 @@ namespace Subble
         {
             var name = e.Payload.ToTyped<IPluginInfo>();
             name.Some(n => Console.WriteLine("Loaded plugin: " + n.Name));
+        }
+
+        private static void AwaitUserInput(ISubbleHost host)
+        {
+            while (true)
+            {
+                var input = Console.ReadLine();
+                
+                switch (input)
+                {
+                    case "exit":
+                        return;
+
+                    case "clear":
+                        Console.Clear();
+                        break;
+
+                    case "":
+                        break;
+
+                    default:
+                        host.EmitEvent(EventsType.Core.INPUT, "USER", input);
+                        break;
+                }
+            }
         }
     }
 }

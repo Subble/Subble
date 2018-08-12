@@ -36,6 +36,11 @@
             /// New plugin initialised
             /// </summary>
             public const string NEW_PLUGIN = PRE + "NEW_PLUGIN_LOADED";
+
+            /// <summary>
+            /// When user input data to console
+            /// </summary>
+            public const string INPUT = PRE + "USER_INPUT";
         }
 
         /// <summary>
