@@ -23,6 +23,16 @@ namespace Subble.Core.Config
         Option<T> Get<T>(string key) where T: IConvertible;
 
         /// <summary>
+        /// Attempts to return a value for the specified key
+        /// If value does not exist, a default value is set
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key">key of requested value</param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        T Get<T>(string key, T defaultValue) where T : IConvertible;
+
+        /// <summary>
         /// Sets the value for a key, value is overwritten if exists
         /// </summary>
         /// <typeparam name="T"></typeparam>
