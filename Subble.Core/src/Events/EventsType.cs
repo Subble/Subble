@@ -73,7 +73,7 @@
             /// <summary>
             /// A new file started playing
             /// </summary>
-            public const string NEW_PLAY = PRE + "NEW_PLAY";
+            public const string START = PRE + "START";
 
             /// <summary>
             /// Player stoped
@@ -89,6 +89,11 @@
             /// Player started
             /// </summary>
             public const string PLAY = PRE + "PLAY";
+
+            /// <summary>
+            /// File ended playback
+            /// </summary>
+            public const string ENDED = PRE + "ENDED";
 
             /// <summary>
             /// When the player status change

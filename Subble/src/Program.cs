@@ -49,8 +49,7 @@ namespace Subble
             var info = e.Payload.ToTyped<ILog>();
             info.Some(i =>
             {
-                Console.WriteLine($"${e.Source}");
-                Console.WriteLine(i.ToString());
+                Console.WriteLine($"${e.Source}:{i}");
             });
         }
 
