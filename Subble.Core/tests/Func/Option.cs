@@ -97,6 +97,44 @@ namespace Subble.Core.Test.Func
                 Assert.Null(castValue);
         }
 
+        [Fact]
+        public void OptionT_Pipe_Can_Chain()
+        {
+            Some("10")
+                .Pipe(e => int.Parse(e))
+                .Pipe(e => e + 10)
+                .Some(e => Assert.Equal(20, e))
+                .None(() => Assert.False(true, "Pipes should return value"));
+        }
+
+        [Fact]
+        public void OptionT_Pipe_handle_exception()
+        {
+            Some("david")
+                .Pipe(e => int.Parse(e))
+                .Pipe(e => e + 10)
+                .Some(e => Assert.False(true, "Exceptions should return None"))
+                .None(() => Assert.True(true, "Pipes should treat exceptions as None"));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("data")]
+        [InlineData(10)]
+        public void OptionT_Pipe_Wont_call_none(object data)
+        {
+
+            var result = Some(data)
+                .ToTyped<string>()
+                .Pipe(e => e.Length)
+                .Pipe<string>(e => null)
+                .Pipe(e => 10);
+
+            result
+                .None(() => Assert.True(true))
+                .Some(e => Assert.False(true, "Pipe can't be called when null"));
+        }
+
         private class Name
         {
             public string MyName { get; }

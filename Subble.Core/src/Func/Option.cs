@@ -99,6 +99,28 @@ namespace Subble.Core.Func
             => new Option<T>(this);
 
         /// <summary>
+        /// Allow to chain function
+        /// </summary>
+        /// <typeparam name="TIn"></typeparam>
+        /// <typeparam name="TOut"></typeparam>
+        /// <param name="pipe"></param>
+        /// <returns></returns>
+        public Option Pipe<TIn, TOut>(Func<TIn, TOut> pipe)
+        {
+            if (!HasValue<TIn>(out var obj))
+                return None();
+
+            try
+            {
+                return Some(pipe(obj));
+            }
+            catch
+            {
+                return None();
+            }
+        }
+
+        /// <summary>
         /// Encapsulate value
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -199,13 +221,28 @@ namespace Subble.Core.Func
         /// <returns></returns>
         public Option<TResult> Cast<TResult>(Func<T, TResult> func)
         {
-            if (HasValue(out var res))
-                return Option.Some(func(res));
+            if (!HasValue(out var res))
+                return Option.None<TResult>();
 
-            return Option.None<TResult>();
+            return Option.Some(func(res));
+        }
+
+        /// <summary>
+        /// Allow to chain function
+        /// </summary>
+        /// <typeparam name="TIn"></typeparam>
+        /// <typeparam name="TOut"></typeparam>
+        /// <param name="pipe"></param>
+        /// <returns></returns>
+        public Option<TOut> Pipe<TOut>(Func<T, TOut> pipe)
+        {
+            return ((Option)this).Pipe(pipe);
         }
 
         public static implicit operator Option(Option<T> parent)
             => parent.option;
+
+        public static implicit operator Option<T>(Option parent)
+            => parent.ToTyped<T>();
     }
 }
