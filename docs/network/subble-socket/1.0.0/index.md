@@ -41,12 +41,12 @@ When a Clients connects it must send the handshake initial request, the server w
 The initial client request is composed by:
 
     1 byte : Request code, 1
-    1 byte : Protocol Major Version
-    1 byte : Protocol Minor Version
-    1 byte : Protocol Patch Version
+    4 byte : Protocol Major Version
+    4 byte : Protocol Minor Version
+    4 byte : Protocol Patch Version
     
     4 + N byte : Client ID
-    1 + N byte : Value separator
+    4 + N byte : Value separator
     4 + N byte : Subscribe list
     4 + N byte : Produce list
     N byte : Request data
@@ -56,8 +56,10 @@ The request code, to start the handshake the request is always 1
 
 **Protocol Major, Minor and Patch Version**
 
-The first three bytes are the version used by the client, if the server don't support the specified version a error response is trigger,
+The first 12 bytes are the version used by the client, if the server don't support the specified version a error response is trigger,
 see [Handshake Response](#handshake-response) for more details.
+
+Please note that an unsigned int should be expected
 
 **Client ID**
 
@@ -136,8 +138,8 @@ The client is able to produce events, at every request to create an event the se
 To create an event the client must do a request with the following structure:
 
     1 byte: request code, 27
-    4 + N byte: Client ID
     1 byte: Serialization format
+    4 + N byte: Client ID
     4 + N byte: Event type name
     4 + N byte: Payload
     N byte: Request Data
