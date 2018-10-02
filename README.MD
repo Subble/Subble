@@ -16,4 +16,4 @@ Subble is an never-ending program to help me manage, play and share my music bet
 
 ## **Documentation**
 
-- See the **Documentation** folder
+- See the **Documentation** folder or go to [github page](https://subble.github.io/Subble/)
